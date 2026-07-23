@@ -180,17 +180,14 @@ video.addEventListener("timeupdate", () => {
   }
 });
 
-document.querySelector("#enter-button").addEventListener("click", () => {
-  entryPrompt.hidden = true;
-  introAnimation.hidden = false;
-  video.muted = false;
-  window.setTimeout(() => {
-    entered = true;
-    entryScreen.hidden = true;
-    app.setAttribute("aria-busy", "false");
-    loadChapter(0);
-  }, 1050);
-});
+entryPrompt.hidden = true;
+introAnimation.hidden = false;
+window.setTimeout(() => {
+  entered = true;
+  entryScreen.hidden = true;
+  app.setAttribute("aria-busy", "false");
+  loadChapter(0);
+}, 3000);
 
 document.querySelector("#plan-toggle").addEventListener("click", () => undefined);
 

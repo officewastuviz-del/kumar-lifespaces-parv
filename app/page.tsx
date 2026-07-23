@@ -159,6 +159,13 @@ export default function Home() {
   }, [activeChapter, entered, filmMode]);
 
   useEffect(() => {
+    const timer = window.setTimeout(() => {
+      enterExperience();
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setPanel(null);
@@ -299,22 +306,14 @@ export default function Home() {
       )}
 
       {!entered ? (
-        <section className="entry-screen" aria-label="Enter the Parv experience">
+        <section className="entry-screen" aria-label="Kumar Lifespaces Parv logo reveal">
           <div className="entry-shade" />
           <div className="entry-brand">
-            <p className="entry-kicker">Kumar Lifespaces presents</p>
             <h1>
               <span>Kumar Lifespaces</span>
               PARV
             </h1>
-            <p className="entry-location">2 &amp; 3 BHK premium homes · Moshi</p>
-            <button className="enter-button" onClick={enterExperience}>
-              <span>Enter experience</span>
-              <span className="enter-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </button>
-            <p className="sound-note">Best experienced with sound</p>
+            <div className="logo-reveal-progress" aria-hidden="true"><span /></div>
           </div>
         </section>
       ) : (
