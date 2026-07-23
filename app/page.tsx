@@ -161,7 +161,7 @@ export default function Home() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       enterExperience();
-    }, 3000);
+    }, 5000);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -309,10 +309,11 @@ export default function Home() {
         <section className="entry-screen" aria-label="Kumar Lifespaces Parv logo reveal">
           <div className="entry-shade" />
           <div className="entry-brand">
-            <h1>
-              <span>Kumar Lifespaces</span>
-              PARV
-            </h1>
+            <img
+              className="entry-logo-image"
+              src="/parv-logo.png"
+              alt="Kumar Lifespaces Parv"
+            />
             <div className="logo-reveal-progress" aria-hidden="true"><span /></div>
           </div>
         </section>

@@ -187,7 +187,7 @@ window.setTimeout(() => {
   entryScreen.hidden = true;
   app.setAttribute("aria-busy", "false");
   loadChapter(0);
-}, 3000);
+}, 5000);
 
 document.querySelector("#plan-toggle").addEventListener("click", () => undefined);
 

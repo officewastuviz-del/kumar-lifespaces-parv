@@ -361,11 +361,15 @@ button { color: inherit; }
 #enter-button span { font-size: 14px; letter-spacing: 0; }
 #enter-button i { position: static; color: var(--accent); font-size: 20px; font-style: normal; line-height: 1; }
 .entry-prompt small { color: var(--muted); font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; }
-.intro-animation h1 { margin: 0; font-family: Georgia, serif; font-size: clamp(38px,7vw,82px); font-weight: 400; }
-.intro-animation p { margin: 0; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; }
-.intro-line { width: 1px; height: 70px; background: linear-gradient(transparent,var(--accent)); }
+.intro-logo {
+  display: block;
+  width: min(620px, 78vw);
+  max-height: 56vh;
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .28);
+}
 .intro-progress { width: min(340px,70vw); height: 1px; background: rgba(255,255,255,0.15); }
-.intro-progress i { display: block; width: 100%; height: 100%; background: var(--accent); transform-origin: left; animation: intro 3s linear both; }
+.intro-progress i { display: block; width: 100%; height: 100%; background: var(--accent); transform-origin: left; animation: intro 5s linear both; }
 
 .experience-dialog {
   width: min(980px, calc(100vw - 38px));

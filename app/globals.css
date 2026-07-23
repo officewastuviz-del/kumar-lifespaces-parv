@@ -178,6 +178,15 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
+.entry-logo-image {
+  display: block;
+  width: min(620px, 78vw);
+  max-height: 56vh;
+  margin: 0 auto;
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
 .entry-location {
   color: rgba(255, 255, 255, 0.78);
 }
@@ -226,7 +235,7 @@ a:focus-visible {
   height: 100%;
   background: var(--orange);
   transform-origin: left;
-  animation: logo-reveal 3s linear both;
+  animation: logo-reveal 5s linear both;
 }
 
 .topbar {
