@@ -305,7 +305,7 @@ export default function Home() {
           <div className="entry-brand">
             <img
               className="entry-logo-image"
-              src="/parv-logo.png"
+              src="/parv-logo-hd.png"
               alt="Kumar Lifespaces Parv"
               fetchPriority="high"
               decoding="sync"
