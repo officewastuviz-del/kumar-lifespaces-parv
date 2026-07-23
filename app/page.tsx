@@ -15,61 +15,61 @@ const chapters: Chapter[] = [
   {
     label: "Grand Arrival",
     eyebrow: "01 / Arrival",
-    src: "/clip-grand-arrival.mp4",
+    src: "/enhanced/clip-grand-arrival-enhanced.mp4",
     duration: 13.5,
   },
   {
     label: "Outdoor Play",
     eyebrow: "02 / Active life",
-    src: "/clip-outdoor-play.mp4",
+    src: "/enhanced/clip-outdoor-play-enhanced.mp4",
     duration: 14,
   },
   {
     label: "Indoor Pool",
     eyebrow: "03 / Recreation",
-    src: "/clip-indoor-pool.mp4",
+    src: "/enhanced/clip-indoor-pool-enhanced.mp4",
     duration: 6.5,
   },
   {
     label: "The Lobby",
     eyebrow: "04 / Welcome",
-    src: "/clip-lobby.mp4",
+    src: "/enhanced/clip-lobby-enhanced.mp4",
     duration: 18,
   },
   {
     label: "Fitness",
     eyebrow: "05 / Movement",
-    src: "/clip-fitness.mp4",
+    src: "/enhanced/clip-fitness-enhanced.mp4",
     duration: 9,
   },
   {
     label: "Indoor Games",
     eyebrow: "06 / Togetherness",
-    src: "/clip-indoor-games.mp4",
+    src: "/enhanced/clip-indoor-games-enhanced.mp4",
     duration: 9,
   },
   {
     label: "Wellness",
     eyebrow: "07 / Calm",
-    src: "/clip-wellness.mp4",
+    src: "/enhanced/clip-wellness-enhanced.mp4",
     duration: 16,
   },
   {
     label: "Day Care",
     eyebrow: "08 / Little worlds",
-    src: "/clip-day-care.mp4",
+    src: "/enhanced/clip-day-care-enhanced.mp4",
     duration: 5,
   },
   {
     label: "Outdoor Decks",
     eyebrow: "09 / Open skies",
-    src: "/clip-outdoor-decks.mp4",
+    src: "/enhanced/clip-outdoor-decks-enhanced.mp4",
     duration: 11,
   },
   {
     label: "Signature Tower",
     eyebrow: "10 / Parv",
-    src: "/clip-signature-tower.mp4",
+    src: "/enhanced/clip-signature-tower-enhanced.mp4",
     duration: 10,
   },
 ];
@@ -90,7 +90,6 @@ const mapEmbedUrl =
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [entered, setEntered] = useState(false);
   const [activeChapter, setActiveChapter] = useState(0);
   const [panel, setPanel] = useState<Panel>(null);
   const [chapterMenu, setChapterMenu] = useState(false);
@@ -124,13 +123,6 @@ export default function Home() {
       video.play().catch(() => setIsPlaying(false));
     };
     const onTime = () => {
-      if (!entered) {
-        if (video.currentTime >= 10.5) {
-          video.currentTime = 0;
-          video.play().catch(() => undefined);
-        }
-        return;
-      }
       const chapter = chapters[activeChapter];
       if (filmMode) {
         setProgress(Math.min(video.currentTime / chapter.duration, 1));
@@ -156,14 +148,7 @@ export default function Home() {
       video.removeEventListener("loadedmetadata", onLoaded);
       video.removeEventListener("timeupdate", onTime);
     };
-  }, [activeChapter, entered, filmMode]);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      enterExperience();
-    }, 5000);
-    return () => window.clearTimeout(timer);
-  }, []);
+  }, [activeChapter, filmMode]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -171,7 +156,7 @@ export default function Home() {
         setPanel(null);
         setChapterMenu(false);
       }
-      if (!entered || panel) return;
+      if (panel) return;
       if (event.key === "ArrowRight") {
         playChapter((activeChapter + 1) % chapters.length);
       }
@@ -186,20 +171,6 @@ export default function Home() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
-
-  const enterExperience = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    setEntered(true);
-    setIsMuted(false);
-    video.muted = false;
-    video.currentTime = 0;
-    video.play().catch(() => {
-      video.muted = true;
-      setIsMuted(true);
-      video.play().catch(() => undefined);
-    });
-  };
 
   function togglePlayback() {
     const video = videoRef.current;
@@ -252,9 +223,7 @@ export default function Home() {
   const currentEyebrow = filmMode
     ? "Kumar Lifespaces / Moshi"
     : chapters[activeChapter].eyebrow;
-  const videoSrc = entered
-    ? chapters[activeChapter].src
-    : "/clip-parv-brand.mp4";
+  const videoSrc = chapters[activeChapter].src;
 
   const retryVideo = () => {
     const video = videoRef.current;
@@ -299,22 +268,7 @@ export default function Home() {
         </div>
       )}
 
-      {!entered ? (
-        <section className="entry-screen" aria-label="Kumar Lifespaces Parv logo reveal">
-          <div className="entry-shade" />
-          <div className="entry-brand">
-            <img
-              className="entry-logo-image"
-              src="/parv-logo-hd.png"
-              alt="Kumar Lifespaces Parv"
-              fetchPriority="high"
-              decoding="sync"
-            />
-            <div className="logo-reveal-progress" aria-hidden="true"><span /></div>
-          </div>
-        </section>
-      ) : (
-        <>
+      <>
           <header className="topbar">
             <button
               className="wordmark"
@@ -408,8 +362,7 @@ export default function Home() {
               aria-label="Close chapter navigation"
             />
           )}
-        </>
-      )}
+      </>
 
       {panel && (
         <section className={`info-panel ${panel === "location" ? "map-panel" : ""}`}>

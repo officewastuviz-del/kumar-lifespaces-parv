@@ -1,14 +1,14 @@
 const chapters = [
-  { label: "Grand Arrival", kicker: "01 / Arrival", src: "public/clip-grand-arrival.mp4", duration: 13.5 },
-  { label: "Outdoor Play", kicker: "02 / Active Life", src: "public/clip-outdoor-play.mp4", duration: 14 },
-  { label: "Indoor Pool", kicker: "03 / Recreation", src: "public/clip-indoor-pool.mp4", duration: 6.5 },
-  { label: "The Lobby", kicker: "04 / Welcome", src: "public/clip-lobby.mp4", duration: 18 },
-  { label: "Fitness", kicker: "05 / Movement", src: "public/clip-fitness.mp4", duration: 9 },
-  { label: "Indoor Games", kicker: "06 / Togetherness", src: "public/clip-indoor-games.mp4", duration: 9 },
-  { label: "Wellness", kicker: "07 / Calm", src: "public/clip-wellness.mp4", duration: 16 },
-  { label: "Day Care", kicker: "08 / Little Worlds", src: "public/clip-day-care.mp4", duration: 5 },
-  { label: "Outdoor Decks", kicker: "09 / Open Skies", src: "public/clip-outdoor-decks.mp4", duration: 11 },
-  { label: "Signature Tower", kicker: "10 / Parv", src: "public/clip-signature-tower.mp4", duration: 10 },
+  { label: "Grand Arrival", kicker: "01 / Arrival", src: "public/enhanced/clip-grand-arrival-enhanced.mp4", duration: 13.5 },
+  { label: "Outdoor Play", kicker: "02 / Active Life", src: "public/enhanced/clip-outdoor-play-enhanced.mp4", duration: 14 },
+  { label: "Indoor Pool", kicker: "03 / Recreation", src: "public/enhanced/clip-indoor-pool-enhanced.mp4", duration: 6.5 },
+  { label: "The Lobby", kicker: "04 / Welcome", src: "public/enhanced/clip-lobby-enhanced.mp4", duration: 18 },
+  { label: "Fitness", kicker: "05 / Movement", src: "public/enhanced/clip-fitness-enhanced.mp4", duration: 9 },
+  { label: "Indoor Games", kicker: "06 / Togetherness", src: "public/enhanced/clip-indoor-games-enhanced.mp4", duration: 9 },
+  { label: "Wellness", kicker: "07 / Calm", src: "public/enhanced/clip-wellness-enhanced.mp4", duration: 16 },
+  { label: "Day Care", kicker: "08 / Little Worlds", src: "public/enhanced/clip-day-care-enhanced.mp4", duration: 5 },
+  { label: "Outdoor Decks", kicker: "09 / Open Skies", src: "public/enhanced/clip-outdoor-decks-enhanced.mp4", duration: 11 },
+  { label: "Signature Tower", kicker: "10 / Parv", src: "public/enhanced/clip-signature-tower-enhanced.mp4", duration: 10 },
 ];
 
 const navigation = [
@@ -25,9 +25,6 @@ const navigation = [
 
 const app = document.querySelector("#app");
 const video = document.querySelector("#hero-video");
-const entryScreen = document.querySelector("#entry-screen");
-const entryPrompt = document.querySelector("#entry-prompt");
-const introAnimation = document.querySelector("#intro-animation");
 const locationList = document.querySelector("#location-list");
 const chapterTitle = document.querySelector("#chapter-title");
 const chapterKicker = document.querySelector("#chapter-kicker");
@@ -44,7 +41,7 @@ const statusText = document.querySelector("#video-status-text");
 const retryVideo = document.querySelector("#retry-video");
 const scenePlan = document.querySelector("#scene-plan");
 
-let entered = false;
+let entered = true;
 let activeChapter = 0;
 let filmMode = false;
 let planVisible = false;
@@ -169,25 +166,12 @@ video.addEventListener("error", () => {
 });
 
 video.addEventListener("timeupdate", () => {
-  if (!entered) {
-    if (video.currentTime >= 10.5) video.currentTime = 0;
-    return;
-  }
   const duration = chapters[activeChapter].duration;
   if (video.currentTime >= duration - 0.08) {
     if (filmMode) loadChapter((activeChapter + 1) % chapters.length, true);
     else video.currentTime = 0;
   }
 });
-
-entryPrompt.hidden = true;
-introAnimation.hidden = false;
-window.setTimeout(() => {
-  entered = true;
-  entryScreen.hidden = true;
-  app.setAttribute("aria-busy", "false");
-  loadChapter(0);
-}, 5000);
 
 document.querySelector("#plan-toggle").addEventListener("click", () => undefined);
 
@@ -247,6 +231,7 @@ window.addEventListener("keydown", (event) => {
 
 buildNavigation();
 buildScenePlan();
+updateSceneUI();
 video.volume = 0.75;
 document.querySelector(".floor-panel").hidden = !planVisible;
 app.classList.remove("plan-open");
