@@ -47,7 +47,8 @@ const scenePlan = document.querySelector("#scene-plan");
 let entered = false;
 let activeChapter = 0;
 let filmMode = false;
-let planVisible = window.innerWidth > 720;
+let planVisible = false;
+let chapterTimer;
 
 function setState(label) {
   stateLabel.textContent = label;
@@ -63,6 +64,10 @@ function updateSceneUI() {
   chapterMain.textContent = filmMode ? "THE PARV FILM" : chapter.label.toUpperCase();
   chapterDetail.textContent = "Kumar Lifespaces Parv · Moshi";
   chapterTitle.hidden = false;
+  window.clearTimeout(chapterTimer);
+  chapterTimer = window.setTimeout(() => {
+    chapterTitle.hidden = true;
+  }, 2400);
   scenePlan.querySelectorAll("button").forEach((button, index) => {
     button.classList.toggle("active", index === activeChapter);
   });
@@ -187,13 +192,7 @@ document.querySelector("#enter-button").addEventListener("click", () => {
   }, 1050);
 });
 
-document.querySelector("#plan-toggle").addEventListener("click", () => {
-  planVisible = !planVisible;
-  document.querySelector(".floor-panel").hidden = !planVisible;
-  app.classList.toggle("plan-open", planVisible);
-  document.querySelector("#plan-toggle-action").textContent = planVisible ? "Hide scene plan" : "Show scene plan";
-  document.querySelector("#plan-toggle").setAttribute("aria-expanded", String(planVisible));
-});
+document.querySelector("#plan-toggle").addEventListener("click", () => undefined);
 
 document.querySelector("#menu-toggle").addEventListener("click", () => {
   app.classList.toggle("menu-open");
@@ -202,7 +201,7 @@ document.querySelector("#menu-toggle").addEventListener("click", () => {
 
 soundButton.addEventListener("click", () => {
   video.muted = !video.muted;
-  soundButton.textContent = video.muted ? "SOUND OFF" : "SOUND ON";
+  soundButton.textContent = video.muted ? "MUSIC OFF" : "MUSIC ON";
   soundButton.classList.toggle("active", !video.muted);
 });
 
@@ -210,20 +209,14 @@ document.querySelector("#volume-slider").addEventListener("input", (event) => {
   video.volume = Number(event.target.value);
   if (video.volume > 0 && video.muted) {
     video.muted = false;
-    soundButton.textContent = "SOUND ON";
+    soundButton.textContent = "MUSIC ON";
     soundButton.classList.add("active");
   }
 });
 
 playButton.addEventListener("click", () => {
-  if (video.paused) {
-    video.play().then(() => setState("PLAYING")).catch(() => undefined);
-    playButton.textContent = "PAUSE";
-  } else {
-    video.pause();
-    setState("PAUSED");
-    playButton.textContent = "PLAY";
-  }
+  playButton.classList.toggle("active");
+  playButton.setAttribute("aria-pressed", String(playButton.classList.contains("active")));
 });
 
 document.querySelector("#full-film-button").addEventListener("click", () => loadChapter(0, true));
@@ -259,5 +252,4 @@ buildNavigation();
 buildScenePlan();
 video.volume = 0.75;
 document.querySelector(".floor-panel").hidden = !planVisible;
-app.classList.toggle("plan-open", planVisible);
-document.querySelector("#plan-toggle-action").textContent = planVisible ? "Hide scene plan" : "Show scene plan";
+app.classList.remove("plan-open");

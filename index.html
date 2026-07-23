@@ -31,9 +31,12 @@
       ></video>
       <div class="video-shade" aria-hidden="true"></div>
 
-      <div class="brand developer-brand" aria-label="Kumar Lifespaces">
-        <span class="brand-mark">K</span>
-        <span><strong>KUMAR LIFESPACES</strong><small>DEVELOPER</small></span>
+      <div class="brand developer-brand" aria-label="Project by Kumar Lifespaces">
+        <span class="brand-copy">
+          <small>Project by</small>
+          <strong><b>K</b>UMAR <em>LIFESPACES</em></strong>
+          <i>BUILDING LEGACIES</i>
+        </span>
       </div>
 
       <div class="project-brand" aria-label="Kumar Lifespaces Parv">
@@ -50,7 +53,7 @@
         </span>
       </button>
 
-      <section class="floor-panel glass" aria-label="Live scene plan">
+      <section class="floor-panel glass" aria-label="Live scene plan" hidden>
         <div class="panel-heading">
           <span>LIVE SCENE</span>
           <span id="floor-label">Overview</span>
@@ -59,7 +62,7 @@
         <div class="plan-key"><i></i><span>Current position</span></div>
       </section>
 
-      <button id="plan-toggle" class="plan-toggle glass" type="button" aria-expanded="true">
+      <button id="plan-toggle" class="plan-toggle glass" type="button" aria-expanded="false" hidden>
         <span id="plan-toggle-action">Hide scene plan</span>
         <strong id="plan-toggle-label">Overview</strong>
       </button>
@@ -84,10 +87,12 @@
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
         <div class="media-controls">
-          <button id="sound-button" class="icon-button active" type="button">SOUND ON</button>
-          <span class="volume-label">VOLUME</span>
+          <button id="sound-button" class="icon-button active" type="button">MUSIC ON</button>
+          <span class="volume-label">MUSIC</span>
           <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Video volume" />
-          <button id="play-button" class="text-button" type="button">PAUSE</button>
+          <span class="volume-label voice-label">VOICE</span>
+          <input id="voice-slider" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Narration volume" />
+          <button id="play-button" class="text-button" type="button">CC</button>
           <button id="full-film-button" class="text-button" type="button">FILM</button>
           <button id="fullscreen-button" class="text-button" type="button">FULL</button>
         </div>
@@ -108,7 +113,7 @@
         <div class="entry-glow"></div>
         <div id="entry-prompt" class="entry-prompt">
           <span class="eyebrow">KUMAR LIFESPACES PARV</span>
-          <button id="enter-button" type="button"><span>Enter experience</span><i></i></button>
+          <button id="enter-button" type="button"><span>Enter experience</span><i>→</i></button>
           <small>Sound on recommended</small>
         </div>
         <div id="intro-animation" class="intro-animation" hidden>
