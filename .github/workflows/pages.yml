@@ -26,8 +26,7 @@ jobs:
       - name: Assemble static experience
         run: |
           mkdir -p _site/app
-          cp index.html github-pages.js _site/
-          cp app/globals.css _site/app/
+          cp index.html github-pages.js github-pages.css _site/
           cp -r public _site/
           touch _site/.nojekyll
       - name: Configure Pages

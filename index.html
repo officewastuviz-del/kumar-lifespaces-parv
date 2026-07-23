@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kumar Lifespaces Parv | A Cinematic WIN Experience</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101513" />
+    <title>Kumar Lifespaces Parv | WIN Experience</title>
     <meta
       name="description"
       content="Explore Kumar Lifespaces Parv — 2 & 3 BHK premium homes at Moshi, Pune — through an immersive cinematic experience."
@@ -12,14 +13,14 @@
     <meta property="og:description" content="2 & 3 BHK premium homes at Moshi, Pune." />
     <meta property="og:image" content="https://officewastuviz-del.github.io/kumar-lifespaces-parv/public/parv-social.png" />
     <link rel="icon" href="public/favicon.svg" />
-    <link rel="stylesheet" href="app/globals.css" />
+    <link rel="stylesheet" href="github-pages.css" />
     <script src="github-pages.js" defer></script>
   </head>
   <body>
-    <main class="experience">
+    <main id="app" aria-busy="true">
       <video
-        id="stageVideo"
-        class="stage-video is-loading"
+        id="hero-video"
+        class="hero-video"
         src="public/clip-parv-brand.mp4"
         poster="public/parv-social.png"
         muted
@@ -28,156 +29,151 @@
         preload="metadata"
         aria-label="A cinematic tour of Kumar Lifespaces Parv"
       ></video>
-      <div class="film-grade"></div>
-      <div class="film-grain"></div>
-      <div id="videoStatus" class="video-status">
-        <span id="videoStatusText">Loading scene…</span>
-        <button id="retryVideo" hidden>Retry video</button>
+      <div class="video-shade" aria-hidden="true"></div>
+
+      <div class="brand developer-brand" aria-label="Kumar Lifespaces">
+        <span class="brand-mark">K</span>
+        <span><strong>KUMAR LIFESPACES</strong><small>DEVELOPER</small></span>
       </div>
 
-      <section id="entryScreen" class="entry-screen" aria-label="Enter the Parv experience">
-        <div class="entry-shade"></div>
-        <div class="entry-brand">
-          <p class="entry-kicker">Kumar Lifespaces presents</p>
-          <h1><span>Kumar Lifespaces</span>PARV</h1>
-          <p class="entry-location">2 &amp; 3 BHK premium homes · Moshi</p>
-          <button id="enterExperience" class="enter-button">
-            <span>Enter experience</span>
-            <span class="enter-arrow" aria-hidden="true">↗</span>
-          </button>
-          <p class="sound-note">Best experienced with sound</p>
+      <div class="project-brand" aria-label="Kumar Lifespaces Parv">
+        <strong>KUMAR LIFESPACES PARV</strong>
+      </div>
+
+      <button id="rera-trigger" class="rera-badge glass" type="button" aria-label="View MahaRERA project registrations">
+        <span class="rera-mark">R</span>
+        <span>
+          <small>MAHARERA REG. NO.</small>
+          <strong>P52100055932</strong>
+          <strong>P52100056164</strong>
+          <em>VIEW PROJECT DETAILS</em>
+        </span>
+      </button>
+
+      <section class="floor-panel glass" aria-label="Live scene plan">
+        <div class="panel-heading">
+          <span>LIVE SCENE</span>
+          <span id="floor-label">Overview</span>
+        </div>
+        <div id="scene-plan" class="scene-plan" aria-label="Experience scene map"></div>
+        <div class="plan-key"><i></i><span>Current position</span></div>
+      </section>
+
+      <button id="plan-toggle" class="plan-toggle glass" type="button" aria-expanded="true">
+        <span id="plan-toggle-action">Hide scene plan</span>
+        <strong id="plan-toggle-label">Overview</strong>
+      </button>
+
+      <section class="location-dock glass" aria-label="Experience navigation">
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false">
+          <span>MENU</span><strong>Explore</strong>
+        </button>
+        <div class="dock-heading">
+          <span>NAVIGATION</span>
+          <span id="location-count">SELECT</span>
+        </div>
+        <nav id="location-list"></nav>
+      </section>
+
+      <section class="status-bar glass" aria-label="Playback controls">
+        <div class="state">
+          <i id="state-dot"></i>
+          <span id="state-label">IDLE</span>
+        </div>
+        <div id="equalizer" aria-label="Audio activity">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="media-controls">
+          <button id="sound-button" class="icon-button active" type="button">SOUND ON</button>
+          <span class="volume-label">VOLUME</span>
+          <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Video volume" />
+          <button id="play-button" class="text-button" type="button">PAUSE</button>
+          <button id="full-film-button" class="text-button" type="button">FILM</button>
+          <button id="fullscreen-button" class="text-button" type="button">FULL</button>
         </div>
       </section>
 
-      <div id="experienceShell" hidden>
-        <header class="topbar">
-          <button class="wordmark" data-chapter="0" aria-label="Return to the beginning">
-            <span class="k-mark">K</span>
-            <span><b>Kumar Lifespaces</b><em>PARV</em></span>
-          </button>
-          <nav aria-label="Primary navigation">
-            <button data-open-panel="location">Location</button>
-            <button data-open-panel="residences">Residences</button>
-            <button data-open-drawer>Amenities</button>
-            <button data-open-panel="project">Project</button>
-            <button data-full-film>Full film</button>
-          </nav>
-          <div class="top-actions">
-            <button id="soundToggle" class="icon-button">Sound on</button>
-            <button class="menu-button" data-open-drawer aria-label="Open chapter navigation">
-              <span></span><span></span>
-            </button>
-          </div>
-        </header>
-
-        <section class="stage-copy" aria-live="polite">
-          <p id="sceneEyebrow">01 / Arrival</p>
-          <h2 id="sceneLabel">Grand Arrival</h2>
-          <button id="playToggle" class="play-control">
-            <span id="playIcon" aria-hidden="true">Ⅱ</span>
-            <span id="playText">Pause scene</span>
-          </button>
-        </section>
-
-        <div class="bottom-rail">
-          <span id="railIndex" class="rail-index">01</span>
-          <div class="progress-track" aria-hidden="true">
-            <span id="progressBar" style="transform: scaleX(0)"></span>
-          </div>
-          <button id="nextScene" class="next-scene">
-            Next scene <span aria-hidden="true">→</span>
-          </button>
-        </div>
-
-        <aside id="chapterDrawer" class="chapter-drawer">
-          <div class="drawer-head">
-            <p>Explore Parv</p>
-            <button data-close-drawer>Close</button>
-          </div>
-          <div id="chapterList" class="chapter-list"></div>
-        </aside>
-        <button
-          id="drawerBackdrop"
-          class="drawer-backdrop"
-          data-close-drawer
-          aria-label="Close chapter navigation"
-          hidden
-        ></button>
+      <div id="chapter-title" class="chapter-title" hidden aria-live="polite">
+        <span id="chapter-kicker">01 / ARRIVAL</span>
+        <strong id="chapter-main">GRAND ARRIVAL</strong>
+        <small id="chapter-detail">Kumar Lifespaces Parv</small>
       </div>
 
-      <section id="infoPanel" class="info-panel" hidden>
-        <div class="panel-top">
-          <div class="panel-brand"><span class="k-mark">K</span><span>PARV</span></div>
-          <button id="panelClose" class="panel-close">Close <span aria-hidden="true">×</span></button>
-        </div>
+      <div id="video-status" class="video-status">
+        <span id="video-status-text">LOADING SCENE</span>
+        <button id="retry-video" type="button" hidden>RETRY</button>
+      </div>
 
-        <div class="location-layout" data-panel="location" hidden>
-          <div class="location-copy">
-            <p class="panel-kicker">Connected by choice</p>
-            <h2>Moshi,<br />Pune</h2>
-            <p class="panel-intro">
-              At Woodsville Street in Moshi, Parv places everyday work, learning and city connections comfortably within reach.
-            </p>
-            <div class="distance-list">
-              <div><span>Pune–Nashik Highway</span><strong>2 km</strong></div>
-              <div><span>Bhosari</span><strong>5 km</strong></div>
-              <div><span>Chikhali</span><strong>6 km</strong></div>
-              <div><span>Talawade IT Park</span><strong>6.8 km</strong></div>
-              <div><span>Pimpri Proposed Metro</span><strong>6.8 km</strong></div>
-              <div><span>Pimpri–Chinchwad</span><strong>9.5 km</strong></div>
+      <section id="entry-screen" class="entry-screen">
+        <div class="entry-glow"></div>
+        <div id="entry-prompt" class="entry-prompt">
+          <span class="eyebrow">KUMAR LIFESPACES PARV</span>
+          <button id="enter-button" type="button"><span>Enter experience</span><i></i></button>
+          <small>Sound on recommended</small>
+        </div>
+        <div id="intro-animation" class="intro-animation" hidden>
+          <div class="intro-line"></div>
+          <h1>Kumar Lifespaces Parv</h1>
+          <p>Moshi</p>
+          <div class="intro-progress"><i></i></div>
+        </div>
+      </section>
+
+      <div class="public-disclaimer" role="note">
+        <span>ARTISTIC IMPRESSION</span>
+      </div>
+
+      <dialog id="map-dialog" class="experience-dialog map-dialog">
+        <section class="dialog-shell">
+          <header class="dialog-header">
+            <div><span class="eyebrow">LOCATION</span><h2>Kumar Parv, Moshi</h2></div>
+            <div class="dialog-actions">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Kumar+Parv%2C+MRCM%2B7MC%2C+Woodsville+St%2C+Aher%2C+Moshi%2C+Pimpri-Chinchwad%2C+Pune%2C+Maharashtra+412105"
+                target="_blank"
+                rel="noreferrer"
+              >OPEN IN MAPS</a>
+              <button class="close-button" data-close-dialog aria-label="Close map">X</button>
             </div>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Kumar+Parv%2C+MRCM%2B7MC%2C+Woodsville+St%2C+Aher%2C+Moshi%2C+Pimpri-Chinchwad%2C+Pune%2C+Maharashtra+412105"
-              target="_blank"
-              rel="noreferrer"
-            >Open in Google Maps <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="map-frame">
+          </header>
+          <div class="map-body">
             <iframe
               src="https://www.google.com/maps?q=Kumar%20Parv%2C%20MRCM%2B7MC%2C%20Woodsville%20St%2C%20Aher%2C%20Moshi%2C%20Pimpri-Chinchwad%2C%20Pune%20412105&output=embed"
               title="Google Map showing Kumar Parv in Moshi"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div class="map-address">
-              <span>Actual project location</span>
-              <strong>Woodsville St, Aher, Moshi, Pimpri-Chinchwad, Pune 412105</strong>
-            </div>
           </div>
-        </div>
+        </section>
+      </dialog>
 
-        <div class="editorial-panel" data-panel="residences" hidden>
-          <div class="editorial-lead">
-            <p class="panel-kicker">Homes for a fuller life</p>
-            <h2>Space to<br />be yourself.</h2>
-            <p class="panel-intro">
-              Premium residences shaped around natural light, purposeful planning and the everyday ease of a complete community.
-            </p>
+      <dialog id="residences-dialog" class="experience-dialog">
+        <section class="dialog-shell">
+          <header class="dialog-header">
+            <div><span class="eyebrow">FLAT OPTIONS</span><h2>Homes at Parv</h2></div>
+            <button class="close-button" data-close-dialog aria-label="Close residences">X</button>
+          </header>
+          <div class="residence-grid">
+            <article><span>RESIDENCE 01</span><h3>2 BHK</h3><p>Considered urban homes shaped around light, privacy and modern family routines.</p></article>
+            <article><span>RESIDENCE 02</span><h3>3 BHK</h3><p>Generous premium homes with room for family, work and moments of quiet.</p></article>
           </div>
-          <div class="residence-options">
-            <article><span>Residence 01</span><h3>2 BHK</h3><p>Considered urban homes for growing families and modern routines.</p></article>
-            <article><span>Residence 02</span><h3>3 BHK</h3><p>Generous premium homes with room for family, work and quiet.</p></article>
-            <button data-chapter="9">Experience the architecture <span aria-hidden="true">→</span></button>
-          </div>
-        </div>
+        </section>
+      </dialog>
 
-        <div class="editorial-panel" data-panel="project" hidden>
-          <div class="editorial-lead">
-            <p class="panel-kicker">Kumar Lifespaces</p>
-            <h2>A landmark<br />called Parv.</h2>
-            <p class="panel-intro">
-              A premium residential address in Moshi bringing architecture, recreation and everyday wellbeing together.
-            </p>
+      <dialog id="project-dialog" class="experience-dialog">
+        <section class="dialog-shell">
+          <header class="dialog-header">
+            <div><span class="eyebrow">PROJECT</span><h2>Kumar Lifespaces Parv</h2></div>
+            <button class="close-button" data-close-dialog aria-label="Close project details">X</button>
+          </header>
+          <div class="project-grid">
+            <div><span>CONFIGURATION</span><strong>2 &amp; 3 BHK premium homes</strong></div>
+            <div><span>LOCATION</span><strong>Moshi, Pune</strong></div>
+            <div><span>MAHARERA</span><strong>P52100055932<br />P52100056164</strong></div>
+            <div><span>ADDRESS</span><strong>Woodsville St, Aher, Moshi, Pimpri-Chinchwad, Pune 412105</strong></div>
           </div>
-          <div class="project-facts">
-            <div><span>Project</span><strong>Kumar Lifespaces Parv</strong></div>
-            <div><span>Configuration</span><strong>2 &amp; 3 BHK premium homes</strong></div>
-            <div><span>Location</span><strong>Moshi, Pune</strong></div>
-            <div><span>MahaRERA</span><strong>P52100055932<br />P52100056164</strong></div>
-            <button data-full-film>Watch the Parv film <span aria-hidden="true">→</span></button>
-          </div>
-        </div>
-      </section>
+        </section>
+      </dialog>
     </main>
   </body>
 </html>
