@@ -13,6 +13,7 @@
     <meta property="og:description" content="2 & 3 BHK premium homes at Moshi, Pune." />
     <meta property="og:image" content="https://officewastuviz-del.github.io/kumar-lifespaces-parv/public/parv-social.png" />
     <link rel="icon" href="public/favicon.svg" />
+    <link rel="preload" as="image" href="public/parv-logo.png" fetchpriority="high" />
     <link rel="stylesheet" href="github-pages.css" />
     <script src="github-pages.js" defer></script>
   </head>
@@ -112,7 +113,13 @@
       <section id="entry-screen" class="entry-screen">
         <div id="entry-prompt" hidden></div>
         <div id="intro-animation" class="intro-animation">
-          <img class="intro-logo" src="public/parv-logo.png" alt="Kumar Lifespaces Parv" />
+          <img
+            class="intro-logo"
+            src="public/parv-logo.png"
+            alt="Kumar Lifespaces Parv"
+            fetchpriority="high"
+            decoding="sync"
+          />
           <div class="intro-progress"><i></i></div>
         </div>
       </section>

@@ -292,16 +292,10 @@ export default function Home() {
       />
       <div className="film-grade" />
       <div className="film-grain" />
-      {!videoReady && (
-        <div className={`video-status ${videoFailed ? "is-error" : ""}`}>
-          {videoFailed ? (
-            <>
-              <span>Video could not start</span>
-              <button onClick={retryVideo}>Retry video</button>
-            </>
-          ) : (
-            <span>Loading scene…</span>
-          )}
+      {videoFailed && (
+        <div className="video-status is-error">
+          <span>Video could not start</span>
+          <button onClick={retryVideo}>Retry video</button>
         </div>
       )}
 
@@ -313,6 +307,8 @@ export default function Home() {
               className="entry-logo-image"
               src="/parv-logo.png"
               alt="Kumar Lifespaces Parv"
+              fetchPriority="high"
+              decoding="sync"
             />
             <div className="logo-reveal-progress" aria-hidden="true"><span /></div>
           </div>

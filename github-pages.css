@@ -331,6 +331,7 @@ button { color: inherit; }
   font-size: 8px;
   letter-spacing: 0.16em;
 }
+.video-status:not(.error) { display: none; }
 .video-status button { border: 0; border-bottom: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; font-size: 8px; }
 
 .entry-screen {
