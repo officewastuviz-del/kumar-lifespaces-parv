@@ -56,6 +56,12 @@ a:focus-visible {
 
 .stage-video {
   object-fit: cover;
+  transition: filter 400ms ease, opacity 400ms ease;
+}
+
+.stage-video.is-loading {
+  filter: blur(3px);
+  opacity: 0.82;
 }
 
 .film-grade {
@@ -71,6 +77,45 @@ a:focus-visible {
   pointer-events: none;
   mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.video-status {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 34px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 14px;
+  background: rgba(10, 8, 6, 0.58);
+  color: rgba(255, 255, 255, 0.76);
+  backdrop-filter: blur(8px);
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 8px;
+}
+
+.video-status:not(.is-error) span::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+.video-status button {
+  padding: 0 0 3px;
+  background: transparent;
+  border-bottom: 1px solid var(--orange);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 8px;
 }
 
 .entry-screen {
@@ -718,6 +763,12 @@ a:focus-visible {
   }
   to {
     transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  to {
+    opacity: 0.25;
   }
 }
 
