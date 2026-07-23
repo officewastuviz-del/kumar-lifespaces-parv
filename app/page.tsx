@@ -90,6 +90,7 @@ const mapEmbedUrl =
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [entered, setEntered] = useState(false);
   const [activeChapter, setActiveChapter] = useState(0);
   const [panel, setPanel] = useState<Panel>(null);
   const [chapterMenu, setChapterMenu] = useState(false);
@@ -123,6 +124,13 @@ export default function Home() {
       video.play().catch(() => setIsPlaying(false));
     };
     const onTime = () => {
+      if (!entered) {
+        if (video.currentTime >= 10.5) {
+          video.currentTime = 0;
+          video.play().catch(() => undefined);
+        }
+        return;
+      }
       const chapter = chapters[activeChapter];
       if (filmMode) {
         setProgress(Math.min(video.currentTime / chapter.duration, 1));
@@ -148,7 +156,14 @@ export default function Home() {
       video.removeEventListener("loadedmetadata", onLoaded);
       video.removeEventListener("timeupdate", onTime);
     };
-  }, [activeChapter, filmMode]);
+  }, [activeChapter, entered, filmMode]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      enterExperience();
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -156,7 +171,7 @@ export default function Home() {
         setPanel(null);
         setChapterMenu(false);
       }
-      if (panel) return;
+      if (!entered || panel) return;
       if (event.key === "ArrowRight") {
         playChapter((activeChapter + 1) % chapters.length);
       }
@@ -171,6 +186,20 @@ export default function Home() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
+
+  const enterExperience = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    setEntered(true);
+    setIsMuted(false);
+    video.muted = false;
+    video.currentTime = 0;
+    video.play().catch(() => {
+      video.muted = true;
+      setIsMuted(true);
+      video.play().catch(() => undefined);
+    });
+  };
 
   function togglePlayback() {
     const video = videoRef.current;
@@ -223,7 +252,9 @@ export default function Home() {
   const currentEyebrow = filmMode
     ? "Kumar Lifespaces / Moshi"
     : chapters[activeChapter].eyebrow;
-  const videoSrc = chapters[activeChapter].src;
+  const videoSrc = entered
+    ? chapters[activeChapter].src
+    : "/enhanced/clip-parv-brand-enhanced.mp4";
 
   const retryVideo = () => {
     const video = videoRef.current;
@@ -240,7 +271,6 @@ export default function Home() {
         ref={videoRef}
         className={`stage-video ${videoReady ? "" : "is-loading"}`}
         src={videoSrc}
-        poster="/parv-social.png"
         muted={isMuted}
         autoPlay
         playsInline
@@ -268,7 +298,22 @@ export default function Home() {
         </div>
       )}
 
-      <>
+      {!entered ? (
+        <section className="entry-screen" aria-label="Kumar Lifespaces Parv logo reveal">
+          <div className="entry-shade" />
+          <div className="entry-brand">
+            <img
+              className="entry-logo-image"
+              src="/parv-logo-hd.png"
+              alt="Kumar Lifespaces Parv"
+              fetchPriority="high"
+              decoding="sync"
+            />
+            <div className="logo-reveal-progress" aria-hidden="true"><span /></div>
+          </div>
+        </section>
+      ) : (
+        <>
           <header className="topbar">
             <button
               className="wordmark"
@@ -362,7 +407,8 @@ export default function Home() {
               aria-label="Close chapter navigation"
             />
           )}
-      </>
+        </>
+      )}
 
       {panel && (
         <section className={`info-panel ${panel === "location" ? "map-panel" : ""}`}>

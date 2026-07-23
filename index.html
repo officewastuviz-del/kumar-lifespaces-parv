@@ -13,16 +13,16 @@
     <meta property="og:description" content="2 & 3 BHK premium homes at Moshi, Pune." />
     <meta property="og:image" content="https://officewastuviz-del.github.io/kumar-lifespaces-parv/public/parv-social.png" />
     <link rel="icon" href="public/favicon.svg" />
+    <link rel="preload" as="image" href="public/parv-logo-hd.png" fetchpriority="high" />
     <link rel="stylesheet" href="github-pages.css" />
     <script src="github-pages.js" defer></script>
   </head>
   <body>
-    <main id="app" aria-busy="false">
+    <main id="app" aria-busy="true">
       <video
         id="hero-video"
         class="hero-video"
-        src="public/enhanced/clip-grand-arrival-enhanced.mp4"
-        poster="public/parv-social.png"
+        src="public/enhanced/clip-parv-brand-enhanced.mp4"
         muted
         autoplay
         playsinline
@@ -108,6 +108,20 @@
         <span id="video-status-text">LOADING SCENE</span>
         <button id="retry-video" type="button" hidden>RETRY</button>
       </div>
+
+      <section id="entry-screen" class="entry-screen">
+        <div id="entry-prompt" hidden></div>
+        <div id="intro-animation" class="intro-animation">
+          <img
+            class="intro-logo"
+            src="public/parv-logo-hd.png"
+            alt="Kumar Lifespaces Parv"
+            fetchpriority="high"
+            decoding="sync"
+          />
+          <div class="intro-progress"><i></i></div>
+        </div>
+      </section>
 
       <dialog id="map-dialog" class="experience-dialog map-dialog">
         <section class="dialog-shell">

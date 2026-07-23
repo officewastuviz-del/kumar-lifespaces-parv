@@ -25,6 +25,9 @@ const navigation = [
 
 const app = document.querySelector("#app");
 const video = document.querySelector("#hero-video");
+const entryScreen = document.querySelector("#entry-screen");
+const entryPrompt = document.querySelector("#entry-prompt");
+const introAnimation = document.querySelector("#intro-animation");
 const locationList = document.querySelector("#location-list");
 const chapterTitle = document.querySelector("#chapter-title");
 const chapterKicker = document.querySelector("#chapter-kicker");
@@ -41,7 +44,7 @@ const statusText = document.querySelector("#video-status-text");
 const retryVideo = document.querySelector("#retry-video");
 const scenePlan = document.querySelector("#scene-plan");
 
-let entered = true;
+let entered = false;
 let activeChapter = 0;
 let filmMode = false;
 let planVisible = false;
@@ -166,12 +169,25 @@ video.addEventListener("error", () => {
 });
 
 video.addEventListener("timeupdate", () => {
+  if (!entered) {
+    if (video.currentTime >= 10.5) video.currentTime = 0;
+    return;
+  }
   const duration = chapters[activeChapter].duration;
   if (video.currentTime >= duration - 0.08) {
     if (filmMode) loadChapter((activeChapter + 1) % chapters.length, true);
     else video.currentTime = 0;
   }
 });
+
+entryPrompt.hidden = true;
+introAnimation.hidden = false;
+window.setTimeout(() => {
+  entered = true;
+  entryScreen.hidden = true;
+  app.setAttribute("aria-busy", "false");
+  loadChapter(0);
+}, 5000);
 
 document.querySelector("#plan-toggle").addEventListener("click", () => undefined);
 
@@ -231,7 +247,6 @@ window.addEventListener("keydown", (event) => {
 
 buildNavigation();
 buildScenePlan();
-updateSceneUI();
 video.volume = 0.75;
 document.querySelector(".floor-panel").hidden = !planVisible;
 app.classList.remove("plan-open");
